@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-steel-950: #060a12;
+  --color-steel-900: #0b1220;
+  --color-steel-800: #111827;
+  --color-steel-700: #1a2332;
+  --color-steel-600: #243044;
+  --color-steel-500: #334155;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-surface: #f8fafc;
+  --color-muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-steel-950);
+  color: #e2e8f0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-amber-500) 35%, transparent);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.mesh-gradient {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, color-mix(in srgb, var(--color-amber-600) 18%, transparent), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 85% 20%, color-mix(in srgb, #3b82f6 12%, transparent), transparent 50%),
+    radial-gradient(ellipse 70% 60% at 50% 100%, color-mix(in srgb, var(--color-steel-700) 80%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--color-steel-950) 0%, var(--color-steel-900) 100%);
+}
+
+.grid-overlay {
+  background-image:
+    linear-gradient(color-mix(in srgb, white 4%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, white 4%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.glow-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-amber-500) 60%, transparent),
+    transparent
+  );
+}
