@@ -33,25 +33,28 @@ export function ServicesPage() {
 
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {/* One featured card spanning two rows: 8 cards fill exactly three rows of three on desktop. */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:auto-rows-fr lg:grid-cols-3">
             {s.items.map((item, i) => {
               const Icon = icons[i] ?? Layers
-              const featured = i === 0 || i === 4
+              const featured = i === 0
               return (
-                <Reveal key={item.title} delay={i * 0.06}>
-                  <Card className={`group h-full ${featured ? 'lg:row-span-2' : ''}`}>
+                <Reveal key={item.title} delay={i * 0.06} className={featured ? 'lg:row-span-2' : undefined}>
+                  <Card className="group flex h-full flex-col">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/15 text-amber-500 transition group-hover:scale-110">
                       <Icon className="h-6 w-6" />
                     </div>
                     <h3 className="font-display mt-4 text-xl font-bold text-white">{item.title}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-slate-400">{item.desc}</p>
                     {featured && (
-                      <div className="mt-6 overflow-hidden rounded-xl border border-white/8">
-                        <img
-                          src={i === 0 ? '/gallery/image12.jpeg' : '/gallery/image10.jpeg'}
-                          alt=""
-                          className="aspect-video w-full object-cover transition duration-500 group-hover:scale-105"
-                        />
+                      <div className="mt-auto pt-6">
+                        <div className="overflow-hidden rounded-xl border border-white/8">
+                          <img
+                            src="/gallery/image12.jpeg"
+                            alt=""
+                            className="aspect-video w-full object-cover transition duration-500 group-hover:scale-105"
+                          />
+                        </div>
                       </div>
                     )}
                   </Card>

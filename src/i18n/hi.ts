@@ -2,6 +2,7 @@ import type { Translations } from './en'
 
 export const hi: Translations = {
   meta: {
+    siteName: 'श्री जगन्नाथ कंस्ट्रक्शन',
     title: 'श्री जगन्नाथ कंस्ट्रक्शन | इंजीनियर और ठेकेदार',
     description:
       'भारत के एकीकृत इस्पात संयंत्रों के लिए फेब्रिकेशन, erection, भारी संरचना, पाइपलाइन और manpower supply।',
@@ -408,6 +409,12 @@ export const hi: Translations = {
       title: 'Workforce के लिए early access चाहिए?',
       desc: 'SJC ResourceHub के साथ यह portal build हो रहा है। Tata Steel Kalinganagar पर pilot के लिए interest register करें।',
     },
+  },
+  notFound: {
+    eyebrow: 'त्रुटि 404',
+    title: 'पेज नहीं मिला',
+    desc: 'आप जो पेज ढूंढ रहे हैं, वह मौजूद नहीं है या हटा दिया गया है।',
+    home: 'होम पर वापस जाएं',
   },
   galleryCategories: {
     project: 'project',

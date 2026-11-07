@@ -22,8 +22,6 @@ import { ClientMarquee } from '../components/ClientMarquee'
 import { ProcessSection } from '../components/home/ProcessSection'
 import { WhyUsSection } from '../components/home/WhyUsSection'
 import { RecognitionSection } from '../components/home/RecognitionSection'
-import { ResourceHubBanner } from '../components/home/ResourceHubBanner'
-import { PortalBanner } from '../components/home/PortalBanner'
 
 const serviceIcons: LucideIcon[] = [Layers, Construction, GitBranch, Cog]
 
@@ -292,8 +290,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <PortalBanner />
-      <ResourceHubBanner />
+      {/* Workforce Portal and ResourceHub banners (components/home/) are hidden until those products launch. */}
 
       <section className="py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">

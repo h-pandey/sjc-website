@@ -48,13 +48,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = dictionaries[locale]
 
+  // Page title and description are set per route by components/RouteMeta.tsx.
   useEffect(() => {
-    document.documentElement.lang = locale === 'en' ? 'en' : locale === 'hi' ? 'hi' : 'or'
+    document.documentElement.lang = locale
     document.body.dataset.locale = locale
-    document.title = t.meta.title
-    const metaDesc = document.querySelector('meta[name="description"]')
-    if (metaDesc) metaDesc.setAttribute('content', t.meta.description)
-  }, [locale, t.meta.title, t.meta.description])
+  }, [locale])
 
   const value = useMemo(() => ({ locale, setLocale, t }), [locale, setLocale, t])
 

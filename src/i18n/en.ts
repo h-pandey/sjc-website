@@ -1,5 +1,6 @@
 export const en = {
   meta: {
+    siteName: 'Shree Jagannath Construction',
     title: 'Shree Jagannath Construction | Engineers & Contractors',
     description:
       'Fabrication, erection, heavy structural, pipelines and manpower supply for integrated steel plants across India.',
@@ -411,6 +412,12 @@ export const en = {
       title: 'Want early access for your workforce?',
       desc: 'We\'re building this portal alongside the SJC ResourceHub platform. Register interest to pilot at Tata Steel Kalinganagar.',
     },
+  },
+  notFound: {
+    eyebrow: 'Error 404',
+    title: 'Page not found',
+    desc: 'The page you are looking for does not exist or has moved.',
+    home: 'Back to home',
   },
   galleryCategories: {
     project: 'project',

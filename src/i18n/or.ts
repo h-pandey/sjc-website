@@ -2,9 +2,10 @@ import type { Translations } from './en'
 
 export const or: Translations = {
   meta: {
+    siteName: 'ଶ୍ରୀ ଜଗନ୍ନାଥ କନ୍ସ୍ଟ୍ରକ୍ସନ',
     title: 'ଶ୍ରୀ ଜଗନ୍ନାଥ କନ୍ସ୍ଟ୍ରକ୍ସନ | ଇଞ୍ଜିନିୟର ଏବଂ ଠିକାଦାର',
     description:
-      'ଭାରତର ଏକୀକୃତ ଷ୍ଟିଲ୍ ପ୍ଲାଣ୍ଟ ପାଇଁ ଫ୍ୟାବ୍ରିକେସନ୍, ଇରେକ୍ସନ୍, ଭାରୀ ଷ୍ଟ୍ରକ୍ଚରାଲ୍, ପାଇପଲାଇନ୍ ଏବଂ ମ୍ୟାନପାୱାର ସର୍ବରaha।',
+      'ଭାରତର ଏକୀକୃତ ଷ୍ଟିଲ୍ ପ୍ଲାଣ୍ଟ ପାଇଁ ଫ୍ୟାବ୍ରିକେସନ୍, ଇରେକ୍ସନ୍, ଭାରୀ ଷ୍ଟ୍ରକ୍ଚରାଲ୍, ପାଇପଲାଇନ୍ ଏବଂ ମ୍ୟାନପାୱାର ସରବରାହ।',
   },
   nav: {
     home: 'ମୁଖ୍ୟ',
@@ -408,6 +409,12 @@ export const or: Translations = {
       title: 'Workforce ପାଇଁ early access ଚାହୁଁଛନ୍ତି?',
       desc: 'SJC ResourceHub ସହିତ ଏହି portal build ହେଉଛି। Tata Steel Kalinganagarରେ pilot ପାଇଁ interest register କରନ୍ତୁ।',
     },
+  },
+  notFound: {
+    eyebrow: 'ତ୍ରୁଟି 404',
+    title: 'ପୃଷ୍ଠା ମିଳିଲା ନାହିଁ',
+    desc: 'ଆପଣ ଖୋଜୁଥିବା ପୃଷ୍ଠାଟି ନାହିଁ କିମ୍ବା ସ୍ଥାନାନ୍ତରିତ ହୋଇଛି।',
+    home: 'ମୁଖ୍ୟ ପୃଷ୍ଠାକୁ ଫେରନ୍ତୁ',
   },
   galleryCategories: {
     project: 'project',

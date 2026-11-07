@@ -1,4 +1,5 @@
 import { company } from '../data/company'
+import { OG_IMAGE_PATH, SITE_URL } from '../data/seo'
 
 export function SeoSchema() {
   const schema = {
@@ -6,6 +7,9 @@ export function SeoSchema() {
     '@type': 'LocalBusiness',
     name: company.legalName,
     description: company.description,
+    url: `${SITE_URL}/`,
+    logo: `${SITE_URL}/logo.jpeg`,
+    image: `${SITE_URL}${OG_IMAGE_PATH}`,
     email: company.email,
     telephone: company.phone,
     address: {

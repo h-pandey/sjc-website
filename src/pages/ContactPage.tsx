@@ -1,18 +1,22 @@
-import { useState, type FormEvent } from 'react'
+import clsx from 'clsx'
+import { Mail, MapPin, Phone, FileText } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { company } from '../data/company'
 import { useI18n } from '../i18n/context'
 import { PageHero, Reveal, Card, Button } from '../components/ui'
-import { Mail, MapPin, Phone, FileText, Send, CheckCircle } from 'lucide-react'
 
+// The enquiry form was removed for launch: it had no backend and discarded every
+// submission. Its strings remain in i18n (contact.form) for when a form service is added.
 export function ContactPage() {
   const { t } = useI18n()
   const c = t.contact
-  const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
+  const details: { icon: LucideIcon; label: string; value: string; href?: string; mono?: boolean }[] = [
+    { icon: Phone, label: c.phone, value: company.phone, href: company.phoneHref },
+    { icon: Mail, label: c.email, value: company.email, href: `mailto:${company.email}` },
+    { icon: MapPin, label: c.location, value: company.location },
+    { icon: FileText, label: c.gstin, value: company.gstin, mono: true },
+  ]
 
   return (
     <>
@@ -33,138 +37,41 @@ export function ContactPage() {
                 </p>
                 <p className="font-display mt-2 text-xl font-bold text-white">{c.banner.title}</p>
                 <p className="mt-2 text-sm text-slate-400">{c.banner.desc}</p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button href={company.phoneHref}>
+                    <Phone className="h-4 w-4" />
+                    {t.common.callNow}
+                  </Button>
+                  <Button href={`mailto:${company.email}`} variant="outline">
+                    <Mail className="h-4 w-4" />
+                    {t.common.emailUs}
+                  </Button>
+                </div>
               </div>
             </div>
           </Reveal>
 
-          <div className="grid gap-12 lg:grid-cols-5">
-            <div className="space-y-6 lg:col-span-2">
-              <Reveal>
-                <Card>
-                  <Phone className="h-6 w-6 text-amber-500" />
-                  <h3 className="font-display mt-4 font-semibold text-white">{c.phone}</h3>
-                  <a
-                    href={company.phoneHref}
-                    className="mt-2 block text-sm text-amber-400 transition hover:text-amber-300"
-                  >
-                    {company.phone}
-                  </a>
-                </Card>
-              </Reveal>
-              <Reveal delay={0.06}>
-                <Card>
-                  <Mail className="h-6 w-6 text-amber-500" />
-                  <h3 className="font-display mt-4 font-semibold text-white">{c.email}</h3>
-                  <a
-                    href={`mailto:${company.email}`}
-                    className="mt-2 block text-sm text-amber-400 transition hover:text-amber-300"
-                  >
-                    {company.email}
-                  </a>
-                </Card>
-              </Reveal>
-              <Reveal delay={0.12}>
-                <Card>
-                  <MapPin className="h-6 w-6 text-amber-500" />
-                  <h3 className="font-display mt-4 font-semibold text-white">{c.location}</h3>
-                  <p className="mt-2 text-sm text-slate-400">{company.location}</p>
-                </Card>
-              </Reveal>
-              <Reveal delay={0.18}>
-                <Card>
-                  <FileText className="h-6 w-6 text-amber-500" />
-                  <h3 className="font-display mt-4 font-semibold text-white">{c.gstin}</h3>
-                  <p className="mt-2 font-mono text-sm text-slate-400">{company.gstin}</p>
-                </Card>
-              </Reveal>
-            </div>
-
-            <Reveal delay={0.1} className="lg:col-span-3">
-              <Card>
-                {submitted ? (
-                  <div className="py-12 text-center">
-                    <CheckCircle className="mx-auto h-12 w-12 text-emerald-500" />
-                    <h3 className="font-display mt-4 text-xl font-bold text-white">
-                      {c.form.successTitle}
-                    </h3>
-                    <p className="mt-2 text-sm text-slate-400">
-                      {c.form.successDesc}{' '}
-                      <a href={`mailto:${company.email}`} className="text-amber-400">
-                        {company.email}
-                      </a>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {details.map(({ icon: Icon, label, value, href, mono }, i) => (
+              <Reveal key={label} delay={i * 0.06}>
+                <Card className="h-full">
+                  <Icon className="h-6 w-6 text-amber-500" />
+                  <h3 className="font-display mt-4 font-semibold text-white">{label}</h3>
+                  {href ? (
+                    <a
+                      href={href}
+                      className="mt-2 block break-words text-sm text-amber-400 transition hover:text-amber-300"
+                    >
+                      {value}
+                    </a>
+                  ) : (
+                    <p className={clsx('mt-2 break-words text-sm text-slate-400', mono && 'font-mono')}>
+                      {value}
                     </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <h3 className="font-display text-xl font-bold text-white">{c.form.title}</h3>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      <div>
-                        <label htmlFor="name" className="mb-2 block text-xs font-medium text-slate-400">
-                          {c.form.name}
-                        </label>
-                        <input
-                          id="name"
-                          required
-                          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-500/50 focus:outline-none"
-                          placeholder={c.form.namePh}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="company" className="mb-2 block text-xs font-medium text-slate-400">
-                          {c.form.company}
-                        </label>
-                        <input
-                          id="company"
-                          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-500/50 focus:outline-none"
-                          placeholder={c.form.companyPh}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="mb-2 block text-xs font-medium text-slate-400">
-                        {c.form.email}
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        required
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-500/50 focus:outline-none"
-                        placeholder={c.form.emailPh}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="service" className="mb-2 block text-xs font-medium text-slate-400">
-                        {c.form.service}
-                      </label>
-                      <select
-                        id="service"
-                        className="w-full rounded-xl border border-white/10 bg-steel-800 px-4 py-3 text-sm text-white focus:border-amber-500/50 focus:outline-none"
-                      >
-                        {c.form.serviceOptions.map((opt) => (
-                          <option key={opt}>{opt}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="mb-2 block text-xs font-medium text-slate-400">
-                        {c.form.message}
-                      </label>
-                      <textarea
-                        id="message"
-                        required
-                        rows={4}
-                        className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-500/50 focus:outline-none"
-                        placeholder={c.form.messagePh}
-                      />
-                    </div>
-                    <Button type="submit">
-                      {c.form.submit}
-                      <Send className="h-4 w-4" />
-                    </Button>
-                  </form>
-                )}
-              </Card>
-            </Reveal>
+                  )}
+                </Card>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>

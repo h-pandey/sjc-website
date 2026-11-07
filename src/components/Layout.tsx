@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X, Mail, MapPin, Phone, ArrowUpRight } from 'lucide-react'
 import clsx from 'clsx'
 import { company } from '../data/company'
+import { pages } from '../data/seo'
 import { useI18n } from '../i18n/context'
 import { ScrollProgress } from './ScrollProgress'
 import { BackToTop } from './BackToTop'
@@ -14,17 +15,7 @@ import { LanguageSwitcher } from './LanguageSwitcher'
 export function Layout() {
   const { t } = useI18n()
 
-  const nav = [
-    { to: '/', label: t.nav.home },
-    { to: '/about', label: t.nav.about },
-    { to: '/services', label: t.nav.services },
-    { to: '/projects', label: t.nav.projects },
-    { to: '/gallery', label: t.nav.gallery },
-    { to: '/capabilities', label: t.nav.capabilities },
-    { to: '/awards', label: t.nav.awards },
-    { to: '/portal', label: t.nav.portal, highlight: true },
-    { to: '/contact', label: t.nav.contact },
-  ]
+  const nav = pages.map((page) => ({ to: page.path, label: t.nav[page.key] }))
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
@@ -87,7 +78,6 @@ export function Layout() {
                   clsx(
                     'relative rounded-full px-3 py-2 text-[13px] font-medium transition-colors',
                     isActive ? 'text-amber-400' : 'text-slate-400 hover:text-white',
-                    'highlight' in item && item.highlight && !isActive && 'text-emerald-400/80',
                   )
                 }
               >
@@ -107,7 +97,8 @@ export function Layout() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2 lg:flex">
+          {/* Between lg and xl the menu button shows too: keep these buttons beside it on the right. */}
+          <div className="hidden items-center gap-2 lg:ml-auto lg:mr-3 lg:flex xl:mx-0">
             <LanguageSwitcher compact />
             <a
               href={`mailto:${company.email}`}
@@ -120,7 +111,7 @@ export function Layout() {
 
           <button
             type="button"
-            className="rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white lg:hidden"
+            className="rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white xl:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={t.common.toggleMenu}
             aria-expanded={menuOpen}
@@ -136,7 +127,7 @@ export function Layout() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
-              className="overflow-hidden border-t border-white/8 bg-steel-950/98 backdrop-blur-xl lg:hidden"
+              className="overflow-hidden border-t border-white/8 bg-steel-950/98 backdrop-blur-xl xl:hidden"
             >
               <nav className="flex flex-col gap-1 px-6 py-4">
                 {nav.map((item, i) => (
@@ -166,12 +157,12 @@ export function Layout() {
                 >
                   {company.phone}
                 </a>
-                <div className="mt-3">
+                <div className="mt-3 lg:hidden">
                   <LanguageSwitcher />
                 </div>
                 <a
                   href={`mailto:${company.email}`}
-                  className="mt-2 rounded-lg bg-amber-500 px-4 py-3 text-center text-sm font-semibold text-steel-950"
+                  className="mt-2 rounded-lg bg-amber-500 px-4 py-3 text-center text-sm font-semibold text-steel-950 lg:hidden"
                 >
                   {t.common.emailUs}
                 </a>
