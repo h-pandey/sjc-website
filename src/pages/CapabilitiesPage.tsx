@@ -1,35 +1,29 @@
-import { technicians, stats } from '../data/company'
+import { stats } from '../data/company'
+import { useI18n } from '../i18n/context'
 import { PageHero, Reveal, Card, StatCounter, SectionHeading } from '../components/ui'
 import { CheckCircle2 } from 'lucide-react'
 
-const workforceBreakdown = [
-  { role: 'Riggers', count: 385 },
-  { role: 'Helpers', count: 278 },
-  { role: 'Welders', count: 72 },
-  { role: 'Gas Cutters', count: 47 },
-  { role: 'Supervisors', count: 39 },
-  { role: 'Fitters', count: 39 },
-  { role: 'Grinders', count: 38 },
-  { role: 'Fabricators', count: 15 },
-]
+const roleCounts = [385, 278, 72, 47, 39, 39, 38, 15]
 
 export function CapabilitiesPage() {
-  const maxCount = Math.max(...workforceBreakdown.map((w) => w.count))
+  const { t } = useI18n()
+  const c = t.capabilities
+  const maxCount = Math.max(...roleCounts)
 
   return (
     <>
-      <PageHero
-        eyebrow="Capabilities"
-        title="Skilled workforce at scale"
-        description="800+ workers deployed across Tata Steel Kalinganagar, Jindal Steel Angul and L&T sites — with an average of 15+ years experience in steel plant erection."
-      />
+      <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} description={c.hero.desc} />
 
       <section className="pb-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-            {stats.map((s) => (
+            {stats.map((s, i) => (
               <Reveal key={s.label}>
-                <StatCounter value={s.value} suffix={s.suffix} label={s.label} />
+                <StatCounter
+                  value={s.value}
+                  suffix={s.suffix}
+                  label={t.home.stats[i]?.label ?? s.label}
+                />
               </Reveal>
             ))}
           </div>
@@ -39,23 +33,15 @@ export function CapabilitiesPage() {
       <section className="border-y border-white/8 bg-steel-900/40 py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal>
-            <SectionHeading
-              subtitle="Technician categories"
-              title="Every skill the job demands"
-            />
-            <p className="mt-4 max-w-2xl text-sm text-slate-400">
-              We manage and rotate manpower as per job requirements and can acquire
-              additional skilled technicians as needed. All workers adhere to strict safety
-              and disciplinary rules at the workplace.
-            </p>
+            <SectionHeading subtitle={c.technicians.eyebrow} title={c.technicians.title} />
+            <p className="mt-4 max-w-2xl text-sm text-slate-400">{c.technicians.desc}</p>
           </Reveal>
-
           <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {technicians.map((t, i) => (
-              <Reveal key={t} delay={i * 0.04}>
+            {c.techniciansList.map((item, i) => (
+              <Reveal key={item} delay={i * 0.04}>
                 <div className="flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-5 py-4">
                   <CheckCircle2 className="h-5 w-5 shrink-0 text-amber-500" />
-                  <span className="text-sm text-slate-300">{t}</span>
+                  <span className="text-sm text-slate-300">{item}</span>
                 </div>
               </Reveal>
             ))}
@@ -66,29 +52,22 @@ export function CapabilitiesPage() {
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal>
-            <SectionHeading
-              subtitle="Workforce composition"
-              title="Designation breakdown at TSK"
-              align="center"
-            />
-            <p className="mx-auto mt-4 max-w-xl text-center text-sm text-slate-400">
-              Sample from active workmen register — CRM, Pellet Plant & BF-2 at Kalinganagar.
-            </p>
+            <SectionHeading subtitle={c.breakdown.eyebrow} title={c.breakdown.title} align="center" />
+            <p className="mx-auto mt-4 max-w-xl text-center text-sm text-slate-400">{c.breakdown.desc}</p>
           </Reveal>
-
           <div className="mt-12 space-y-4">
-            {workforceBreakdown.map((w, i) => (
-              <Reveal key={w.role} delay={i * 0.05}>
+            {c.roles.map((role, i) => (
+              <Reveal key={role} delay={i * 0.05}>
                 <div className="flex items-center gap-4">
-                  <span className="w-28 shrink-0 text-sm text-slate-400">{w.role}</span>
+                  <span className="w-28 shrink-0 text-sm text-slate-400">{role}</span>
                   <div className="relative h-8 flex-1 overflow-hidden rounded-full bg-white/5">
                     <div
-                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-amber-600 to-amber-400 transition-all duration-1000"
-                      style={{ width: `${(w.count / maxCount) * 100}%` }}
+                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-amber-600 to-amber-400"
+                      style={{ width: `${(roleCounts[i] / maxCount) * 100}%` }}
                     />
                   </div>
                   <span className="w-12 shrink-0 text-right font-display text-sm font-bold text-white">
-                    {w.count}
+                    {roleCounts[i]}
                   </span>
                 </div>
               </Reveal>
@@ -101,14 +80,9 @@ export function CapabilitiesPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal>
             <Card className="text-center">
-              <h3 className="font-display text-2xl font-bold text-white">
-                Perfect mix of skills and experience
-              </h3>
+              <h3 className="font-display text-2xl font-bold text-white">{c.closing.title}</h3>
               <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">
-                Our organisation combines veteran supervisors with skilled tradespeople —
-                fitters, welders, riggers, fabricators and safety stewards — all dedicated
-                to on-time, safe delivery. We can scale teams rapidly for shutdowns and
-                expansion projects.
+                {c.closing.desc}
               </p>
             </Card>
           </Reveal>

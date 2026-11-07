@@ -201,3 +201,84 @@ export const mission =
 
 export const vision =
   'To help build new, better, efficient, innovative and eco-friendly steel plants — ensuring longevity through proper maintenance works and shutdowns.'
+
+export const heroImages = [
+  '/gallery/image6.jpeg',
+  '/gallery/image10.jpeg',
+  '/gallery/image12.jpeg',
+  '/gallery/image17.jpeg',
+] as const
+
+export const resourceHubDemoUrl =
+  import.meta.env.DEV ? 'http://localhost:5173' : 'http://localhost:5173'
+
+export const processSteps = [
+  {
+    step: '01',
+    title: 'Scope & mobilisation',
+    description:
+      'Review BOQ, plant area requirements and manpower mix. Deploy supervisors, safety stewards and skilled trades to site.',
+  },
+  {
+    step: '02',
+    title: 'Fabrication & pre-assembly',
+    description:
+      'Structural fabrication, piping spools and equipment prep — aligned to client drawings and weld procedures.',
+  },
+  {
+    step: '03',
+    title: 'Erection & alignment',
+    description:
+      'Crane-assisted lifts, precision alignment of columns, trusses, furnace shells and process equipment.',
+  },
+  {
+    step: '04',
+    title: 'Handover & maintenance',
+    description:
+      'Quality checks, safety clearance and seamless transition to regular or shutdown maintenance contracts.',
+  },
+] as const
+
+export const differentiators = [
+  {
+    title: 'Steel-plant native',
+    stat: '34+ yrs',
+    description: 'Born inside Tata Steel Jamshedpur — not a general contractor adapting to plants.',
+  },
+  {
+    title: 'Safety-first culture',
+    stat: '4-Star',
+    description: 'Tata Steel safety rating with daily toolbox talks and fire-service programmes on site.',
+  },
+  {
+    title: 'Scale on demand',
+    stat: '800+',
+    description: 'Mobilise hundreds of riggers, welders and fitters within days for expansion or shutdown.',
+  },
+  {
+    title: 'Heavy lift ready',
+    stat: '600 MT',
+    description: 'Proven capability on single-structure erection jobs at TSK Phase-II.',
+  },
+] as const
+
+export const recognitionQuotes = [
+  {
+    quote:
+      'Certificate of Appreciation for outstanding contribution to TSK Phase-II Expansion Project.',
+    source: 'Tata Steel',
+    year: '2025',
+  },
+  {
+    quote:
+      'Best Safety Compliance Business Partner — Service Category.',
+    source: 'Tata Steel',
+    year: '2024',
+  },
+  {
+    quote:
+      'India 5000 Best MSME Awards — Winner for heavy structural fabrication and erection.',
+    source: 'India 5000',
+    year: '2026',
+  },
+] as const

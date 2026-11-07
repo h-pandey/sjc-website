@@ -5,7 +5,6 @@ Premium marketing site for M/s Shree Jagannath Construction (Engineers & Contrac
 ## Run locally
 
 ```bash
-cd website
 npm install
 npm run dev
 ```
@@ -29,10 +28,9 @@ Content sourced from the client company profile and workmen data (September 2026
 ### Vercel (recommended)
 
 ```bash
-cd website
 npx vercel --prod
 ```
 
 ### GitHub Pages
 
-Push to `main` — the workflow at `.github/workflows/deploy-website.yml` builds and deploys automatically when `website/` changes. Enable GitHub Pages (source: GitHub Actions) in repo settings.
+Push to `main` — the workflow at `.github/workflows/deploy-website.yml` builds and deploys automatically. Enable GitHub Pages (source: GitHub Actions) in repo settings. The site is served under `/<repo-name>/`, taken from the repo the workflow runs in.
