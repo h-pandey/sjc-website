@@ -102,7 +102,8 @@ export function Button({
   const className = clsx(base, variants[variant])
 
   if (href) {
-    const isExternal = href.startsWith('http') || href.startsWith('mailto:')
+    const isExternal =
+      href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')
     if (isExternal) {
       return (
         <a href={href} className={className}>

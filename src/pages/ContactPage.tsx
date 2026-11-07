@@ -1,157 +1,77 @@
-import { useState, type FormEvent } from 'react'
+import clsx from 'clsx'
+import { Mail, MapPin, Phone, FileText } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { company } from '../data/company'
+import { useI18n } from '../i18n/context'
 import { PageHero, Reveal, Card, Button } from '../components/ui'
-import { Mail, MapPin, Phone, FileText, Send, CheckCircle } from 'lucide-react'
 
+// The enquiry form was removed for launch: it had no backend and discarded every
+// submission. Its strings remain in i18n (contact.form) for when a form service is added.
 export function ContactPage() {
-  const [submitted, setSubmitted] = useState(false)
+  const { t } = useI18n()
+  const c = t.contact
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
+  const details: { icon: LucideIcon; label: string; value: string; href?: string; mono?: boolean }[] = [
+    { icon: Phone, label: c.phone, value: company.phone, href: company.phoneHref },
+    { icon: Mail, label: c.email, value: company.email, href: `mailto:${company.email}` },
+    { icon: MapPin, label: c.location, value: company.location },
+    { icon: FileText, label: c.gstin, value: company.gstin, mono: true },
+  ]
 
   return (
     <>
-      <PageHero
-        eyebrow="Contact"
-        title="Let's discuss your project"
-        description="Share your scope — fabrication, erection, manpower or maintenance — and we'll get back to you promptly."
-      />
+      <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} description={c.hero.desc} />
 
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-5">
-            <div className="space-y-6 lg:col-span-2">
-              <Reveal>
-                <Card>
-                  <Phone className="h-6 w-6 text-amber-500" />
-                  <h3 className="font-display mt-4 font-semibold text-white">Phone</h3>
-                  <a
-                    href={company.phoneHref}
-                    className="mt-2 block text-sm text-amber-400 transition hover:text-amber-300"
-                  >
-                    {company.phone}
-                  </a>
-                </Card>
-              </Reveal>
-              <Reveal delay={0.06}>
-                <Card>
-                  <Mail className="h-6 w-6 text-amber-500" />
-                  <h3 className="font-display mt-4 font-semibold text-white">Email</h3>
-                  <a
-                    href={`mailto:${company.email}`}
-                    className="mt-2 block text-sm text-amber-400 transition hover:text-amber-300"
-                  >
-                    {company.email}
-                  </a>
-                </Card>
-              </Reveal>
-              <Reveal delay={0.12}>
-                <Card>
-                  <MapPin className="h-6 w-6 text-amber-500" />
-                  <h3 className="font-display mt-4 font-semibold text-white">Location</h3>
-                  <p className="mt-2 text-sm text-slate-400">{company.location}</p>
-                </Card>
-              </Reveal>
-              <Reveal delay={0.18}>
-                <Card>
-                  <FileText className="h-6 w-6 text-amber-500" />
-                  <h3 className="font-display mt-4 font-semibold text-white">GSTIN</h3>
-                  <p className="mt-2 font-mono text-sm text-slate-400">{company.gstin}</p>
-                </Card>
-              </Reveal>
+          <Reveal>
+            <div className="mb-12 overflow-hidden rounded-2xl border border-white/8 lg:flex">
+              <img
+                src="/gallery/image20.jpeg"
+                alt=""
+                className="h-48 w-full object-cover lg:h-auto lg:w-2/5"
+              />
+              <div className="flex flex-1 flex-col justify-center bg-steel-900/60 p-8">
+                <p className="text-xs font-semibold uppercase tracking-widest text-amber-500">
+                  {c.banner.eyebrow}
+                </p>
+                <p className="font-display mt-2 text-xl font-bold text-white">{c.banner.title}</p>
+                <p className="mt-2 text-sm text-slate-400">{c.banner.desc}</p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button href={company.phoneHref}>
+                    <Phone className="h-4 w-4" />
+                    {t.common.callNow}
+                  </Button>
+                  <Button href={`mailto:${company.email}`} variant="outline">
+                    <Mail className="h-4 w-4" />
+                    {t.common.emailUs}
+                  </Button>
+                </div>
+              </div>
             </div>
+          </Reveal>
 
-            <Reveal delay={0.1} className="lg:col-span-3">
-              <Card>
-                {submitted ? (
-                  <div className="py-12 text-center">
-                    <CheckCircle className="mx-auto h-12 w-12 text-emerald-500" />
-                    <h3 className="font-display mt-4 text-xl font-bold text-white">
-                      Message received
-                    </h3>
-                    <p className="mt-2 text-sm text-slate-400">
-                      This is a demo form. For immediate enquiries, email us directly at{' '}
-                      <a href={`mailto:${company.email}`} className="text-amber-400">
-                        {company.email}
-                      </a>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {details.map(({ icon: Icon, label, value, href, mono }, i) => (
+              <Reveal key={label} delay={i * 0.06}>
+                <Card className="h-full">
+                  <Icon className="h-6 w-6 text-amber-500" />
+                  <h3 className="font-display mt-4 font-semibold text-white">{label}</h3>
+                  {href ? (
+                    <a
+                      href={href}
+                      className="mt-2 block break-words text-sm text-amber-400 transition hover:text-amber-300"
+                    >
+                      {value}
+                    </a>
+                  ) : (
+                    <p className={clsx('mt-2 break-words text-sm text-slate-400', mono && 'font-mono')}>
+                      {value}
                     </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <h3 className="font-display text-xl font-bold text-white">Send an enquiry</h3>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      <div>
-                        <label htmlFor="name" className="mb-2 block text-xs font-medium text-slate-400">
-                          Full name
-                        </label>
-                        <input
-                          id="name"
-                          required
-                          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-500/50 focus:outline-none"
-                          placeholder="Your name"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="company" className="mb-2 block text-xs font-medium text-slate-400">
-                          Company
-                        </label>
-                        <input
-                          id="company"
-                          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-500/50 focus:outline-none"
-                          placeholder="Your organisation"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="mb-2 block text-xs font-medium text-slate-400">
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        required
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-500/50 focus:outline-none"
-                        placeholder="you@company.com"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="service" className="mb-2 block text-xs font-medium text-slate-400">
-                        Service required
-                      </label>
-                      <select
-                        id="service"
-                        className="w-full rounded-xl border border-white/10 bg-steel-800 px-4 py-3 text-sm text-white focus:border-amber-500/50 focus:outline-none"
-                      >
-                        <option>Fabrication & Erection</option>
-                        <option>Manpower Supply</option>
-                        <option>Piping & Ducting</option>
-                        <option>Equipment Erection</option>
-                        <option>Maintenance / Shutdown</option>
-                        <option>Other</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="mb-2 block text-xs font-medium text-slate-400">
-                        Project details
-                      </label>
-                      <textarea
-                        id="message"
-                        required
-                        rows={4}
-                        className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-500/50 focus:outline-none"
-                        placeholder="Describe your scope, location and timeline..."
-                      />
-                    </div>
-                    <Button type="submit">
-                      Send enquiry
-                      <Send className="h-4 w-4" />
-                    </Button>
-                  </form>
-                )}
-              </Card>
-            </Reveal>
+                  )}
+                </Card>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>

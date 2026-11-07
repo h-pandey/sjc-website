@@ -1,18 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import clsx from 'clsx'
 import type { GalleryItem } from '../data/gallery'
+import { useI18n } from '../i18n/context'
 import { Reveal } from './ui'
 
 export function GalleryGrid({
   items,
   columns = 3,
+  categoryLabels,
 }: {
   items: GalleryItem[]
   columns?: 2 | 3 | 4
+  categoryLabels?: Record<GalleryItem['category'], string>
 }) {
+  const { t } = useI18n()
   const [active, setActive] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (active === null) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActive(null)
+      if (e.key === 'ArrowLeft') setActive((i) => (i === null ? null : (i - 1 + items.length) % items.length))
+      if (e.key === 'ArrowRight') setActive((i) => (i === null ? null : (i + 1) % items.length))
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [active, items.length])
 
   const gridCols = {
     2: 'sm:grid-cols-2',
@@ -54,7 +69,7 @@ export function GalleryGrid({
                   item.category === 'award' && 'bg-purple-500/20 text-purple-400',
                 )}
               >
-                {item.category}
+                {categoryLabels?.[item.category] ?? item.category}
               </span>
             </button>
           </Reveal>
@@ -74,7 +89,7 @@ export function GalleryGrid({
               type="button"
               className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
               onClick={() => setActive(null)}
-              aria-label="Close"
+              aria-label={t.common.close}
             >
               <X className="h-6 w-6" />
             </button>
@@ -85,7 +100,7 @@ export function GalleryGrid({
                 e.stopPropagation()
                 prev()
               }}
-              aria-label="Previous"
+              aria-label={t.common.previous}
             >
               <ChevronLeft className="h-6 w-6" />
             </button>
@@ -96,7 +111,7 @@ export function GalleryGrid({
                 e.stopPropagation()
                 next()
               }}
-              aria-label="Next"
+              aria-label={t.common.next}
             >
               <ChevronRight className="h-6 w-6" />
             </button>

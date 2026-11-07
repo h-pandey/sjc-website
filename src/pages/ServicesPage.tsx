@@ -1,4 +1,4 @@
-import { services, plantAreas } from '../data/company'
+import { useI18n } from '../i18n/context'
 import { PageHero, Reveal, Card, SectionHeading } from '../components/ui'
 import {
   Layers,
@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
-const iconMap: Record<string, LucideIcon> = {
+const icons: LucideIcon[] = [
   Layers,
   Construction,
   GitBranch,
@@ -21,36 +21,42 @@ const iconMap: Record<string, LucideIcon> = {
   Wrench,
   Package,
   ShieldCheck,
-}
+]
 
 export function ServicesPage() {
+  const { t } = useI18n()
+  const s = t.services
+
   return (
     <>
-      <PageHero
-        eyebrow="Services"
-        title="Full-spectrum steel plant contracting"
-        description="Fabrication, erection, piping, equipment, manpower and maintenance — delivered with safety-first execution across every plant zone."
-      />
+      <PageHero eyebrow={s.hero.eyebrow} title={s.hero.title} description={s.hero.desc} />
 
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-            {services.map((s, i) => {
-              const Icon = iconMap[s.icon] ?? Layers
+          {/* One featured card spanning two rows: 8 cards fill exactly three rows of three on desktop. */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:auto-rows-fr lg:grid-cols-3">
+            {s.items.map((item, i) => {
+              const Icon = icons[i] ?? Layers
+              const featured = i === 0
               return (
-                <Reveal key={s.title} delay={i * 0.06}>
-                  <Card className="h-full">
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-500/15 text-amber-500">
-                        <Icon className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-display text-xl font-bold text-white">{s.title}</h3>
-                        <p className="mt-3 text-sm leading-relaxed text-slate-400">
-                          {s.description}
-                        </p>
-                      </div>
+                <Reveal key={item.title} delay={i * 0.06} className={featured ? 'lg:row-span-2' : undefined}>
+                  <Card className="group flex h-full flex-col">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/15 text-amber-500 transition group-hover:scale-110">
+                      <Icon className="h-6 w-6" />
                     </div>
+                    <h3 className="font-display mt-4 text-xl font-bold text-white">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-400">{item.desc}</p>
+                    {featured && (
+                      <div className="mt-auto pt-6">
+                        <div className="overflow-hidden rounded-xl border border-white/8">
+                          <img
+                            src="/gallery/image12.jpeg"
+                            alt=""
+                            className="aspect-video w-full object-cover transition duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                      </div>
+                    )}
                   </Card>
                 </Reveal>
               )
@@ -63,13 +69,13 @@ export function ServicesPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal>
             <SectionHeading
-              subtitle="Coverage"
-              title="Plant areas we work in"
+              subtitle={s.coverage.eyebrow}
+              title={s.coverage.title}
               align="center"
             />
           </Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {plantAreas.map((area, i) => (
+            {s.plantAreas.map((area, i) => (
               <Reveal key={area} delay={i * 0.05}>
                 <div className="rounded-xl border border-white/8 bg-white/[0.02] px-6 py-8 text-center transition hover:border-amber-500/30">
                   <span className="font-display text-lg font-semibold text-white">{area}</span>

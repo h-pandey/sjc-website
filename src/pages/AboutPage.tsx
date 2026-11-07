@@ -1,43 +1,31 @@
-import { company, leadership, timeline, mission, vision } from '../data/company'
+import { useI18n } from '../i18n/context'
 import { PageHero, Reveal, Card } from '../components/ui'
 import { Target, Eye } from 'lucide-react'
 
 export function AboutPage() {
+  const { t } = useI18n()
+  const a = t.about
+
   return (
     <>
-      <PageHero
-        eyebrow="Our story"
-        title="Three decades of steel plant mastery"
-        description="From Balaji Construction in 1992 to Shree Jagannath Construction today — combining veteran expertise with modern execution."
-      />
+      <PageHero eyebrow={a.hero.eyebrow} title={a.hero.title} description={a.hero.desc} />
 
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-16 lg:grid-cols-2">
             <Reveal>
-              <h2 className="font-display text-2xl font-bold text-white">Company history</h2>
+              <div className="mb-8 overflow-hidden rounded-2xl border border-white/8">
+                <img
+                  src="/gallery/image15.jpeg"
+                  alt="Shree Jagannath Construction team"
+                  className="aspect-[4/3] w-full object-cover"
+                />
+              </div>
+              <h2 className="font-display text-2xl font-bold text-white">{a.historyTitle}</h2>
               <div className="mt-6 space-y-4 text-sm leading-relaxed text-slate-400">
-                <p>
-                  {company.legalName} traces its roots to <strong className="text-slate-300">1992</strong>, when
-                  Mr. Y Narayan Rao founded M/s Balaji Construction — a small construction company
-                  that grew within the Tata Steel Jamshedpur ecosystem. Work was also carried out
-                  under M/s V S Engineering at various sites.
-                </p>
-                <p>
-                  In <strong className="text-slate-300">2016</strong>, his son Mr. Shankar Rao joined the business
-                  and Shree Jagannath Construction was formed — with the aim of building new-age
-                  steel plants by combining age-old knowledge with modern technology and youthful
-                  enthusiasm.
-                </p>
-                <p>
-                  The firm deals in fabrication, erection, heavy structural work, pipelines,
-                  equipment, general order supply, manpower supply and maintenance jobs across
-                  blast furnaces, COBP, sinter plants, RMHS, SMS, CEPT and pellet plants.
-                </p>
-                <p>
-                  The company believes in hard work, sincerity, and maintaining strict safety and
-                  quality standards — always encouraging employees to take on new responsibilities.
-                </p>
+                {a.history.map((para) => (
+                  <p key={para.slice(0, 40)}>{para}</p>
+                ))}
               </div>
             </Reveal>
 
@@ -49,8 +37,8 @@ export function AboutPage() {
                       <Target className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="font-display font-semibold text-white">Mission</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-400">{mission}</p>
+                      <h3 className="font-display font-semibold text-white">{a.mission}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-400">{a.missionText}</p>
                     </div>
                   </div>
                 </Card>
@@ -60,8 +48,8 @@ export function AboutPage() {
                       <Eye className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="font-display font-semibold text-white">Vision</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-400">{vision}</p>
+                      <h3 className="font-display font-semibold text-white">{a.vision}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-400">{a.visionText}</p>
                     </div>
                   </div>
                 </Card>
@@ -71,18 +59,17 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline */}
       <section className="border-y border-white/8 bg-steel-900/40 py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal>
             <h2 className="font-display text-center text-3xl font-bold text-white">
-              Milestones
+              {a.milestones}
             </h2>
           </Reveal>
           <div className="relative mt-16">
             <div className="absolute left-4 top-0 hidden h-full w-px bg-gradient-to-b from-amber-500/50 via-white/10 to-transparent lg:left-1/2 lg:block" />
             <div className="space-y-12">
-              {timeline.map((item, i) => (
+              {a.timeline.map((item, i) => (
                 <Reveal key={item.year} delay={i * 0.08}>
                   <div
                     className={`relative flex flex-col gap-4 lg:flex-row lg:items-center ${
@@ -110,21 +97,19 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Leadership */}
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal>
             <h2 className="font-display text-center text-3xl font-bold text-white">
-              Leadership
+              {a.leadership}
             </h2>
           </Reveal>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:mx-auto lg:max-w-4xl">
-            {leadership.map((person, i) => (
+            {a.leaders.map((person, i) => (
               <Reveal key={person.name} delay={i * 0.1}>
                 <Card className="text-center">
                   <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-amber-500/30 to-amber-600/10 font-display text-2xl font-bold text-amber-400">
                     {person.name.split(' ').slice(-1)[0][0]}
-                    {person.name.split(' ')[1]?.[0] ?? ''}
                   </div>
                   <h3 className="font-display mt-4 text-xl font-bold text-white">{person.name}</h3>
                   <p className="text-sm text-amber-500">{person.role}</p>
